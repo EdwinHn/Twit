@@ -1,5 +1,6 @@
 package com.mycompany.twit;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 class UsuarioInfo {
@@ -12,13 +13,14 @@ class UsuarioInfo {
     private String genero;
     private boolean cuenta_activada;
     private int seguidores = 0;
+    private ArrayList<String> twitsUsuario;
 
     private static UsuarioInfo[] cuentas = new UsuarioInfo[100];
     private static String[] twits = new String[100];
     private static int contador = 0;
     private static int contadorTwits = 0;
 
-    private Seguidores seguidos; // Clase que maneja los usuarios seguidos
+    private Seguidores seguidos;
 
     public UsuarioInfo(String usuario, String nombre, String edad, String fecha, String contraseña, String genero) {
         this.usuario = usuario;
@@ -26,30 +28,27 @@ class UsuarioInfo {
         this.contraseña = contraseña;
         this.genero = genero;
         this.nombre = nombre;
-        this.seguidos = new Seguidores(); // Inicialización de la lista de seguidos
-        this.cuenta_activada = true; 
+        this.seguidos = new Seguidores();
+        this.cuenta_activada = true;
+        this.twitsUsuario = new ArrayList<>();
     }
-    
-     public UsuarioInfo(){
-         
-     }
-    
-     // Método para desactivar cuenta
+
+    public UsuarioInfo() {
+
+    }
+
     public void desactivarCuenta() {
         cuenta_activada = false;
     }
 
-    // Método para activar cuenta
     public void activarCuenta() {
         cuenta_activada = true;
     }
 
-    // Método para verificar si la cuenta está activa
     public boolean isCuentaActiva() {
         return cuenta_activada;
     }
 
-    // Métodos de acceso a los atributos
     public String getusuario() {
         return usuario;
     }
@@ -77,12 +76,12 @@ class UsuarioInfo {
     public Seguidores getSeguidos() {
         return seguidos;
     }
-   
 
     public int getSeguidores() {
         return seguidores;
     }
- public void incrementarSeguidores() {
+
+    public void incrementarSeguidores() {
         seguidores++;
     }
 
@@ -93,24 +92,21 @@ class UsuarioInfo {
     }
 
     public void seguirUsuario(UsuarioInfo usuarioASeguir) {
-    if (!this.equals(usuarioASeguir) && !seguidos.loSigo(usuarioASeguir)) {
-        seguidos.agregar(usuarioASeguir); // Agregar a la lista de seguidos del usuario actual
-        usuarioASeguir.incrementarSeguidores(); // Incrementar seguidores solo del usuario seguido
+        if (!this.equals(usuarioASeguir) && !seguidos.loSigo(usuarioASeguir)) {
+            seguidos.agregar(usuarioASeguir);
+            usuarioASeguir.incrementarSeguidores();
+        }
+
     }
-    // Llamar al método que actualiza la interfaz
-    
-}
 
     public void dejarDeSeguir(UsuarioInfo usuarioADejarDeSeguir) {
-    if (seguidos.loSigo(usuarioADejarDeSeguir)) {
-        seguidos.eliminar(usuarioADejarDeSeguir); // Eliminar de la lista de seguidos del usuario actual
-        usuarioADejarDeSeguir.decrementarSeguidores(); // Decrementar seguidores solo del usuario seguido
-    }
-    // Llamar al método que actualiza la interfaz
-    
-}
+        if (seguidos.loSigo(usuarioADejarDeSeguir)) {
+            seguidos.eliminar(usuarioADejarDeSeguir);
+            usuarioADejarDeSeguir.decrementarSeguidores();
+        }
 
-    // Métodos estáticos para el manejo de cuentas
+    }
+
     public static UsuarioInfo obtenerUsuarioPerfil(String nombreUsuario) {
         for (int i = 0; i < contador; i++) {
             UsuarioInfo usuario = cuentas[i];
@@ -118,14 +114,14 @@ class UsuarioInfo {
                 return usuario;
             }
         }
-        return null; // Usuario no encontrado
+        return null;
     }
 
     public static UsuarioInfo getCuenta(int index) {
         if (index >= 0 && index < contador) {
             return cuentas[index];
         } else {
-            return null; // Índice fuera de rango
+            return null;
         }
     }
 
@@ -146,64 +142,70 @@ class UsuarioInfo {
                 return true;
             }
         }
-        return false; // Usuario no encontrado
+        return false;
     }
 
     public static void buscarUsuarios(String texto) {
-    boolean encontrado = false;
-    for (int i = 0; i < contador; i++) {
-        UsuarioInfo usuario = cuentas[i];
-        if (usuario.getusuario().contains(texto) && usuario.isCuentaActiva()) {
-            System.out.println(usuario.getusuario());
-            encontrado = true;
+        boolean encontrado = false;
+        for (int i = 0; i < contador; i++) {
+            UsuarioInfo usuario = cuentas[i];
+            if (usuario.getusuario().contains(texto) && usuario.isCuentaActiva()) {
+                System.out.println(usuario.getusuario());
+                encontrado = true;
+            }
+        }
+        if (!encontrado) {
+            System.out.println("No se encontraron usuarios activos.");
         }
     }
-    if (!encontrado) {
-        System.out.println("No se encontraron usuarios activos.");
-    }
-}
 
     public static String[] buscarUsuariosConSeguimiento(String texto, UsuarioInfo usuarioActual) {
-    // Contador para el número de resultados encontrados
-    int contadorResultados = 0;
-    
-    // Arreglo fijo para almacenar los resultados (puedes ajustar el tamaño si es necesario)
-    String[] resultadosTemp = new String[getContador()];
-    
-    for (int i = 0; i < getContador(); i++) {
-        UsuarioInfo cuenta = getCuenta(i);
-        
-        // Verifica si el nombre del usuario contiene el texto buscado y si la cuenta está activa
-        if (cuenta.getusuario().contains(texto) && cuenta.isCuentaActiva()) {
-            // Verifica si el usuario actual sigue a esta cuenta
-            String estado = usuarioActual.getSeguidos().loSigo(cuenta) ? "Sigues" : "No sigues";
-            
-            // Añadir el resultado al arreglo temporal
-            resultadosTemp[contadorResultados] = cuenta.getusuario() + " - " + estado;
-            contadorResultados++;
+        int contadorResultados = 0;
+
+        String[] resultadosTemp = new String[getContador()];
+
+        for (int i = 0; i < getContador(); i++) {
+            UsuarioInfo cuenta = getCuenta(i);
+
+            if (cuenta.getusuario().contains(texto) && cuenta.isCuentaActiva()) {
+                String estado = usuarioActual.getSeguidos().loSigo(cuenta) ? "Sigues" : "No sigues";
+
+                resultadosTemp[contadorResultados] = cuenta.getusuario() + " - " + estado;
+                contadorResultados++;
+            }
         }
+
+        String[] resultados = new String[contadorResultados];
+        System.arraycopy(resultadosTemp, 0, resultados, 0, contadorResultados);
+
+        return resultados;
     }
-    
-    // Crear un arreglo final con el tamaño adecuado
-    String[] resultados = new String[contadorResultados];
-    System.arraycopy(resultadosTemp, 0, resultados, 0, contadorResultados);
-    
-    return resultados;
-}
 
     public static void agregarTwit(String twit) {
         if (contador < twits.length) {
             twits[contadorTwits] = twit;
             contadorTwits++;
-            
+
         }
     }
-    
+
     public String[] obtenerTwits() {
         return twits;
     }
 
     public int obtenerContadorTwits() {
-        return contador;
+        return contadorTwits;
+    }
+
+    public void agregarTwitUsuario(String twit) {
+        if (twitsUsuario != null) {
+            twitsUsuario.add(twit);
+        }
+    }
+
+    
+    public ArrayList<String> getTwitsUsuario() {
+        System.out.println(twitsUsuario);
+        return this.twitsUsuario;
     }
 }

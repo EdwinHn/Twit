@@ -6,6 +6,7 @@ public class InternalTimeline extends javax.swing.JInternalFrame {
 
     public InternalTimeline() {
         initComponents();
+        
         verTwits = new UsuarioInfo();
         
         String[] twits = verTwits.obtenerTwits(); 

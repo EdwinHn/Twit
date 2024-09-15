@@ -97,24 +97,24 @@ public class InternalEditarPerfil extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_BuscarPersonaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_BuscarPersonaMouseClicked
-        InternalFrameEditar.setVisible(true);
         InternalFrameEditar.getContentPane().removeAll();
+        InternalFrameEditar.setVisible(true);
         InternalBuscarPersona interBuscarPersona = new InternalBuscarPersona();
         InternalFrameEditar.add(interBuscarPersona);
         interBuscarPersona.setVisible(true);
     }//GEN-LAST:event_btn_BuscarPersonaMouseClicked
 
     private void btn_DesActivarCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_DesActivarCuentaMouseClicked
-        InternalFrameEditar.setVisible(true);
         InternalFrameEditar.getContentPane().removeAll();
+        InternalFrameEditar.setVisible(true);
         InternalDesActivarCuenta interDesActivarCuenta = new InternalDesActivarCuenta();
         InternalFrameEditar.add(interDesActivarCuenta);
         interDesActivarCuenta.setVisible(true);
     }//GEN-LAST:event_btn_DesActivarCuentaMouseClicked
 
     private void btn_EntrarPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_EntrarPerfilMouseClicked
-        InternalFrameEditar.setVisible(true);
         InternalFrameEditar.getContentPane().removeAll();
+        InternalFrameEditar.setVisible(true);
         InternalEntrarPerfil interEntrarPerfil = new InternalEntrarPerfil();
         InternalFrameEditar.add(interEntrarPerfil);
         interEntrarPerfil.setVisible(true);

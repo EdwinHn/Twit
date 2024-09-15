@@ -290,52 +290,56 @@ public class Registrar extends javax.swing.JFrame {
         String contraseña = jTextFieldContraseña.getText().trim();
         String fechas = jTextFieldFecha.getText();
         String edad = jTextFieldEdad.getText();
-        int Edad = Integer.parseInt(jTextFieldEdad.getText());
         int gener = jComboBoxGenero.getSelectedIndex();
         String genero = jComboBoxGenero.getItemAt(gener);
         UsuarioInfo.verificar_cuenta(usuario);
 
-        try {
-            Edad = Integer.parseInt(jTextFieldEdad.getText());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "INGRESAR VALORES ENTEROS EN LA EDAD");
-            return;
-        }
-
         if (nombre.isEmpty() || usuario.isEmpty() || contraseña.isEmpty() || fechas.isEmpty() || edad.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Por favor llene todos los campos solicitados");
         } else {
+
+            try {
+                int Edad = Integer.parseInt(jTextFieldEdad.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "INGRESAR VALORES ENTEROS EN LA EDAD");
+                jTextFieldEdad.requestFocus();
+                return;
+            }
+
             if (UsuarioInfo.verificar_cuenta(usuario)) {
                 JOptionPane.showMessageDialog(null, "el usuario ya esta en uso");
-            } else if (Edad<18){
-                JOptionPane.showMessageDialog(null, "Debes ser mayor de 18 años para registrarte");
+
+            } else {
+                int age = Integer.parseInt(jTextFieldEdad.getText());
                 
-            } else{
-                UsuarioInfo cuenta = new UsuarioInfo(usuario, nombre, edad, fechas, contraseña, genero);
+                if (age < 18 || age > 101) {
+                    JOptionPane.showMessageDialog(null, "Debes ser mayor de 18 años para registrarte.\nO ingresa una edad válida");
+                    
+                }else {
+                    UsuarioInfo cuenta = new UsuarioInfo(usuario, nombre, edad, fechas, contraseña, genero);
+                    UsuarioInfo.agregarCuenta(cuenta);
+                    user_actual.setUsuarioActual(cuenta);
 
-                UsuarioInfo.agregarCuenta(cuenta);
-                user_actual.setUsuarioActual(cuenta);
+                    jTextFieldNombre.setText("");
+                    jTextFieldUsername.setText("");
+                    jTextFieldContraseña.setText("");
+                    jTextFieldFecha.setText("");
+                    jTextFieldEdad.setText("");
+                    JOptionPane.showMessageDialog(null, "\nBienvenido\nCuenta registrada exitosamente: " + "\n"
+                            + "Nombre: " + nombre + "\n"
+                            + "Usuario: " + usuario + "\n"
+                            + "Fecha: " + fechas + "\n"
+                            + "Edad: " + edad + "\n"
+                            + "contra: " + contraseña
+                            + "\nGénero: " + genero);
 
-                jTextFieldNombre.setText("");
-                jTextFieldUsername.setText("");
-                jTextFieldContraseña.setText("");
-                jTextFieldFecha.setText("");
-                jTextFieldEdad.setText("");
-                JOptionPane.showMessageDialog(null, "\nBienvenido\nCuenta registrada exitosamente: " + "\n"
-                        + "Nombre: " + nombre + "\n"
-                        + "Usuario: " + usuario + "\n"
-                        + "Fecha: " + fechas + "\n"
-                        + "Edad: " + edad + "\n"
-                        + "contra: " + contraseña
-                        + "\nGénero: " + genero);
+                    Inicio menu = new Inicio();
+                    menu.setVisible(true);
+                    this.dispose();
 
-                Inicio menu = new Inicio();
-                menu.setVisible(true);
-                this.dispose();
-
+                }
             }
         }
-
     }//GEN-LAST:event_btn_ContinuarMouseClicked
 
     private void jComboBoxGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxGeneroActionPerformed

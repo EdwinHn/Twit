@@ -39,8 +39,12 @@ public class InternalDesActivarCuenta extends javax.swing.JInternalFrame {
         jLabelMandarTweet.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelMandarTweet.setText("Desactivar Cuenta");
 
+        jButton1.setBackground(new java.awt.Color(0, 0, 0));
         jButton1.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        jButton1.setText("Desactivar Cuenta");
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Desactivar/Activar Cuenta");
+        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);

@@ -1,4 +1,3 @@
-
 package com.mycompany.twit;
 
 import java.awt.Color;
@@ -7,9 +6,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 //import javax.swing.JOptionPane;
 
-
 public class Iniciar_Sesion extends javax.swing.JFrame {
 
+    String usuario;
+
+    Gestion_Cuenta gestionCuentas = new Gestion_Cuenta();
 
     public Iniciar_Sesion() {
         initComponents();
@@ -43,6 +44,7 @@ public class Iniciar_Sesion extends javax.swing.JFrame {
         Image imgScaleRegistro = imgRegistro.getScaledInstance(btn_Registro.getWidth(), btn_Registro.getHeight(), Image.SCALE_SMOOTH);
         ImageIcon scaledIconRegistro = new ImageIcon(imgScaleRegistro);
         btn_Registro.setIcon(scaledIconRegistro);
+
     }
 
     /**
@@ -217,25 +219,33 @@ public class Iniciar_Sesion extends javax.swing.JFrame {
     private void btn_ContinuarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ContinuarMouseClicked
         String usuari = jTextFieldUsuario.getText().trim();
         String contra = jPasswordField.getText().trim();
-        boolean encontrado= false;
+        boolean encontrado = false;
         for (int i = 0; i < UsuarioInfo.getContador(); i++) {
-        UsuarioInfo cuenta = UsuarioInfo.getCuenta(i);
-        if (cuenta.getusuario().equals(usuari) && cuenta.getcontraseña().equals(contra)) {
-            encontrado = true;
-            user_actual.setUsuarioActual(cuenta);
-            break;
+            UsuarioInfo cuenta = UsuarioInfo.getCuenta(i);
+            if (cuenta.getusuario().equals(usuari) && cuenta.getcontraseña().equals(contra)) {
+                encontrado = true;
+                user_actual.setUsuarioActual(cuenta);
+                break;
+            }
         }
-    }
 
         if (encontrado) {
-           JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso\nBienvenido");
-           Inicio menu = new Inicio();
-           menu.setVisible(true);
-           this.dispose();
+            
+            UsuarioInfo usuarioLogueado = user_actual.getUsuarioActual();
+            String perfil = usuarioLogueado.getusuario();
+            UsuarioInfo cuentaInfo = gestionCuentas.obtenerInformacion(perfil);
+
+            if (usuarioLogueado != null && cuentaInfo != null) {
+                usuario = usuarioLogueado.getusuario();
+            }
+            JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso\nBienvenido " + usuario);
+            Inicio menu = new Inicio();
+            menu.setVisible(true);
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Usuario o Contraseña erronea o cuenta inexistente");
         }
-        
+
     }//GEN-LAST:event_btn_ContinuarMouseClicked
 
     private void jPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldActionPerformed

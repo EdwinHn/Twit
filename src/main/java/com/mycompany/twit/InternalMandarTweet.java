@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 public class InternalMandarTweet extends javax.swing.JInternalFrame {
 
-    private UsuarioInfo usuarioInfo;
+    private UsuarioInfo usuarioInfo = new UsuarioInfo();
 
     String tweet;
     String fechaActual;
@@ -14,10 +14,24 @@ public class InternalMandarTweet extends javax.swing.JInternalFrame {
 
     public InternalMandarTweet() {
         initComponents();
+        
+        UsuarioInfo usuarioLogueado = user_actual.getUsuarioActual();
+        String perfil = usuarioLogueado.getusuario();
+        UsuarioInfo cuentaInfo = gestionCuentas.obtenerInformacion(perfil);
+
+        if (usuarioLogueado != null && cuentaInfo != null) {
+            usuario= usuarioLogueado.getusuario();
+        }
 
     }
 
     UsuarioInfo mandarTwit = new UsuarioInfo();
+    
+    Gestion_Cuenta gestionCuentas = new Gestion_Cuenta();
+
+    
+        
+    
     
 
     /**
@@ -140,23 +154,22 @@ public class InternalMandarTweet extends javax.swing.JInternalFrame {
 
     private void btn_MandarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_MandarMouseClicked
         
-        usuario = mandarTwit.getusuario();
-        System.out.println(usuario);
         tweet = TweetTextArea.getText();
 
         if (!tweet.isEmpty()) {
             if (tweet.length() > 140) {
-                JOptionPane.showMessageDialog(null, "EL tweet debe contener un máximo de 140 caracteres.\nIntente reescribiendolo");
+                JOptionPane.showMessageDialog(null, "El tweet debe contener un máximo de 140 caracteres.\nIntente reescribiendolo");
 
             } else {
                 Date todayDate = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 fechaActual = sdf.format(todayDate);
                 JOptionPane.showMessageDialog(null, "El tweet se ha mandado exitosamente");
-                String twit = (usuario + "\n" + tweet + "\n       " + fechaActual + "\n\n");
+                String twit = (usuario + ":\n" + tweet + "\n       " + fechaActual + "\n\n");
                 TweetTextArea.setText("");
 
                 UsuarioInfo.agregarTwit(twit);
+                usuarioInfo.agregarTwitUsuario(twit);
             }
 
         } else {
@@ -164,6 +177,7 @@ public class InternalMandarTweet extends javax.swing.JInternalFrame {
 
         }
 
+       usuarioInfo.getTwitsUsuario();
 
     }//GEN-LAST:event_btn_MandarMouseClicked
 

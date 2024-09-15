@@ -3,7 +3,7 @@ package com.mycompany.twit;
 
 public class Seguidores {
    
-     private UsuarioInfo[] seguidos = new UsuarioInfo[100];
+    private UsuarioInfo[] seguidos = new UsuarioInfo[100];
     private int cantidadSeguidos = 0;
 
     public void agregar(UsuarioInfo usuario) {
