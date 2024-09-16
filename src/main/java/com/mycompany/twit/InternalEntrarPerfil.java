@@ -295,12 +295,7 @@ public class InternalEntrarPerfil extends javax.swing.JInternalFrame {
 
                 verTwits = info; 
 
-                twits = verTwits.getTwitsUsuario();
 
-                
-                System.out.println("Twits: " + twits);
-
-                
                 StringBuilder sb = new StringBuilder();
                 for (String twit : twits) {
                     sb.append(twit).append("\n");

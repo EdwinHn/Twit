@@ -3,14 +3,16 @@ package com.mycompany.twit;
 public class InternalTimeline extends javax.swing.JInternalFrame {
 
     private UsuarioInfo verTwits;
+    private Twits twitsUsuario;
 
     public InternalTimeline() {
         initComponents();
         
         verTwits = new UsuarioInfo();
+        twitsUsuario = new Twits();
         
-        String[] twits = verTwits.obtenerTwits(); 
-        int contador = verTwits.obtenerContadorTwits(); 
+        String[] twits = twitsUsuario.obtenerTwits(); 
+        int contador = twitsUsuario.obtenerContadorTwits(); 
         StringBuilder textosConcatenados = new StringBuilder();
 
         for (int i = 0; i < contador; i++) {

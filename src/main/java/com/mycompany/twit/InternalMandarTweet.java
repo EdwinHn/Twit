@@ -7,8 +7,10 @@ import javax.swing.JOptionPane;
 public class InternalMandarTweet extends javax.swing.JInternalFrame {
 
     private UsuarioInfo usuarioInfo = new UsuarioInfo();
+    private Twits twits = new Twits();
 
     String tweet;
+    String twit;
     String fechaActual;
     String usuario;
 
@@ -165,19 +167,17 @@ public class InternalMandarTweet extends javax.swing.JInternalFrame {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 fechaActual = sdf.format(todayDate);
                 JOptionPane.showMessageDialog(null, "El tweet se ha mandado exitosamente");
-                String twit = (usuario + ":\n" + tweet + "\n       " + fechaActual + "\n\n");
+                twit = (usuario + ":\n" + tweet + "\n       " + fechaActual + "\n\n");
                 TweetTextArea.setText("");
 
-                UsuarioInfo.agregarTwit(twit);
-                usuarioInfo.agregarTwitUsuario(twit);
+                Twits.agregarTwit(twit);
+              
             }
 
         } else {
             JOptionPane.showMessageDialog(null, "Por favor ingrese algún texto");
 
         }
-
-       usuarioInfo.getTwitsUsuario();
 
     }//GEN-LAST:event_btn_MandarMouseClicked
 

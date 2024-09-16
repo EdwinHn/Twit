@@ -13,12 +13,9 @@ class UsuarioInfo {
     private String genero;
     private boolean cuenta_activada;
     private int seguidores = 0;
-    private ArrayList<String> twitsUsuario;
 
     private static UsuarioInfo[] cuentas = new UsuarioInfo[100];
-    private static String[] twits = new String[100];
     private static int contador = 0;
-    private static int contadorTwits = 0;
 
     private Seguidores seguidos;
 
@@ -30,7 +27,6 @@ class UsuarioInfo {
         this.nombre = nombre;
         this.seguidos = new Seguidores();
         this.cuenta_activada = true;
-        this.twitsUsuario = new ArrayList<>();
     }
 
     public UsuarioInfo() {
@@ -181,31 +177,5 @@ class UsuarioInfo {
         return resultados;
     }
 
-    public static void agregarTwit(String twit) {
-        if (contador < twits.length) {
-            twits[contadorTwits] = twit;
-            contadorTwits++;
-
-        }
-    }
-
-    public String[] obtenerTwits() {
-        return twits;
-    }
-
-    public int obtenerContadorTwits() {
-        return contadorTwits;
-    }
-
-    public void agregarTwitUsuario(String twit) {
-        if (twitsUsuario != null) {
-            twitsUsuario.add(twit);
-        }
-    }
-
     
-    public ArrayList<String> getTwitsUsuario() {
-        System.out.println(twitsUsuario);
-        return this.twitsUsuario;
-    }
 }
